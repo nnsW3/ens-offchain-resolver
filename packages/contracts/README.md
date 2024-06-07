@@ -16,3 +16,21 @@ This library facilitates checking signatures over CCIP read responses.
 
 ### [OffchainResolver.sol](contracts/OffchainResolver.sol)
 This contract implements the offchain resolution system. Set this contract as the resolver for a name, and that name and all its subdomains that are not present in the ENS registry will be resolved via the provided gateway by supported clients.
+
+### Commands
+
+### deploy contract
+`npx hardhat deploy --network <network>`
+
+### verify contract
+`npx hardhat verify --constructor-args ./deploy/arguments.js --network <network> <deployed contract address>`
+
+### ENV VARS
+
+- `ETHERSCAN_API_KEY`: etherscan api key for verify the contracts
+- `SEPOLIA_ALCHEMY_KEY`: alchemy api key for sepolia
+- `ETH_ALCHEMY_KEY`: alchemy api key for the ethereum mainnet
+- `DEPLOYER_PRIVATE_KEY`: deployer private key, without `0x` prefix
+- `DEPLOYER_ADDRESS`: deployer address
+- `SIGNER_ADDRESS`: signer address that is used by the gateway, testing signer: `0x56b5d20AFB05EdAf36fdAC47C52D7912fE9684a7`
+- `GATEWAY_URL`: gateway url for the lookup endpoint, testing gateway: `https://ens-offchain-resolver-poc-53bc35fa24af.herokuapp.com`
