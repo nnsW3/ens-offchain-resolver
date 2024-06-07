@@ -23,7 +23,7 @@ This contract implements the offchain resolution system. Set this contract as th
 `npx hardhat deploy --network <network>`
 
 ### verify contract
-`npx hardhat verify --constructor-args ./deploy/arguments.js --network <network> <deployed contract address>`
+`npx hardhat verify --constructor-args ./arguments.js --network <network> <deployed contract address>`
 
 ### ENV VARS
 
