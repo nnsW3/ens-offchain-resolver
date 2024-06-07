@@ -22,12 +22,12 @@ module.exports = {
     },
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/${process.env.SEPOLIA_ALCHEMY_KEY}`,
-      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`],
       gatewayurl,
     },
     mainnet: {
       url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ETH_ALCHEMY_KEY}`,
-      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`],
       gatewayurl,
     },
   },
@@ -39,7 +39,7 @@ module.exports = {
       default: process.env.SIGNER_ADDRESS,
     },
     deployer: {
-      default: process.env.DEPLOYER_ADDRESS,
+      default: process.env.DEPLOYER_ADDRESS || 0,
     },
   },
 };
