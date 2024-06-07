@@ -1,18 +1,18 @@
 {
     "martinet.zircut.com": {
         "addresses": {
-            "60": "0x9E26861Dce32610E34bD4dB390494c32D5c805a1",
+            "1": "0x9E26861Dce32610E34bD4dB390494c32D5c805a1",
             "11155111": "0xA06e3e5194aE45902394421e1a2224ECce7A9c46"
         },
         "text":{ "email": "this.is.a.test@zircut.com" },
-        "contenthash": "0xe301017012204edd2984eeaf3ddf50bac238ec95c5713fb40b5e428b508fdbe55d3b9f155ffe"
+        "contenthash": ""
     },
     "*.zircut.com": {
         "addresses": {
-            "60": "0x9E26861Dce32610E34bD4dB390494c32D5c805a1",
+            "1": "0x9E26861Dce32610E34bD4dB390494c32D5c805a1",
             "11155111": "0xA06e3e5194aE45902394421e1a2224ECce7A9c46"
         },
         "text":{ "email": "this.is.another.test@zircut.com" },
-        "contenthash": "0xe301017012204edd2984eeaf3ddf50bac238ec95c5713fb40b5e428b508fdbe55d3b9f155ffe"
+        "contenthash": ""
     }
 }
