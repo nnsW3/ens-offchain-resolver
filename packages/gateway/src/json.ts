@@ -37,8 +37,6 @@ export class JSONDatabase implements Database {
 
   addr(name: string, coinType: number) {
     const nameData = this.findName(name);
-
-    console.log(name, !nameData, nameData?.addresses, coinType)
     if (!nameData || !nameData.addresses || !nameData.addresses[coinType]) {
       return { addr: ZERO_ADDRESS, ttl: this.ttl };
     }

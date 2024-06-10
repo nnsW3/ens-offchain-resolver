@@ -1,1 +1,1 @@
-export const ETH_COIN_TYPE = 1;
+export const ETH_COIN_TYPE = 60;

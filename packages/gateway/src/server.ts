@@ -48,7 +48,6 @@ const queryHandlers: {
 } = {
   'addr(bytes32)': async (db, name, _args) => {
     const { addr, ttl } = await db.addr(name, ETH_COIN_TYPE);
-    
     return { result: [addr], ttl };
   },
   'addr(bytes32,uint256)': async (db, name, args) => {
@@ -87,7 +86,6 @@ async function query(
   }
 
   const { result, ttl } = await handler(db, name, args.slice(1));
-
   return {
     result: Resolver.encodeFunctionResult(signature, result),
     validUntil: Math.floor(Date.now() / 1000 + ttl),
@@ -104,10 +102,6 @@ export function makeServer(signer: ethers.utils.SigningKey, db: Database) {
         // Query the database
         const { result, validUntil } = await query(db, name, data);
 
-
-        console.log('\n\n')
-        console.log(JSON.stringify(db), name, result, validUntil)
-        console.log('\n\n')
         // Hash and sign the response
         let messageHash = ethers.utils.solidityKeccak256(
           ['bytes', 'address', 'uint64', 'bytes32', 'bytes32'],
