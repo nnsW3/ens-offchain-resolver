@@ -18,15 +18,13 @@ The gateway server implements CCIP Read (EIP 3668), and answers requests by look
 
 The smart contract provides a resolver stub that implement CCIP Read (EIP 3668) and ENS wildcard resolution (ENSIP 10). When queried for a name, it directs the client to query the gateway server. When called back with the gateway server response, the resolver verifies the signature was produced by an authorised signer, and returns the response to the client.
 
-## Trying it out
+## Trying it Out (Local)
 
 Start by generating an Ethereum private key; this will be used as a signing key for any messages signed by your gateway service. You can use a variety of tools for this; for instance, this Python snippet will generate one for you:
 
 ```
 python3 -c "import os; import binascii; print('0x%s' % binascii.hexlify(os.urandom(32)).decode('utf-8'))"
 ```
-
-For the rest of this demo we will be using the standard test private key `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`.
 
 First, install dependencies and build all packages:
 
@@ -37,9 +35,9 @@ yarn && yarn build
 [Follow here](https://github.com/ensdomains/offchain-resolver/blob/main/packages/gateway/README.md) to run the gateway locally. ( Skip this step if using a deployed gateway )
 <br/><br/>
 
-Take a look at the data in `test.eth.json` under `packages/gateway/`; it specifies addresses for the name `test.eth` and the wildcard `*.test.eth`.
+Take a look at the data in `test.eth.json` under `packages/gateway/`; it specifies addresses for the name `martinet.zircut.com` and the wildcard `*.zircut.com`.
 
-Next, edit `packages/contracts/hardhat.config.js`; replacing the address on `line 65` with the one output when you ran the command above. Besure to add the `privatekey://` prefix if you are using a private key here.
+Next, edit `packages/contracts/hardhat.config.js`; replacing the address on `line 65` with the private key you generated above. Be sure to add the `privatekey://` prefix.
 
 Then, in a new terminal, build and run a test node with an ENS registry and the offchain resolver deployed:
 
@@ -81,7 +79,7 @@ yarn start:client --registry 0x5FbDB2315678afecb367f032d93F642f64180aa3 test.eth
 yarn start:client --registry 0x5FbDB2315678afecb367f032d93F642f64180aa3 foo.test.eth
 ```
 
-You should see output similar to the following:
+You should see outputs similar to the following:
 
 ```
 $ yarn start:client --registry 0x5FbDB2315678afecb367f032d93F642f64180aa3 test.eth
@@ -92,25 +90,39 @@ eth address 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 content null
 email test@example.com
 Done in 0.28s.
-
-$ yarn start:client --registry 0x5FbDB2315678afecb367f032d93F642f64180aa3 foo.test.eth
-yarn run v1.22.17
-$ node packages/client/dist/index.js --registry 0x5FbDB2315678afecb367f032d93F642f64180aa3 foo.test.eth
-resolver address 0x8464135c8F25Da09e49BC8782676a84730C318bC
-eth address 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
-content null
-email wildcard@example.com
-Done in 0.23s.
 ```
 
-Check these addresses against the gateway's `test.eth.json` and you will see that they match.
+Check these addresses against the chosen gateway test db json file and you will see that they match.
 
-## Real-world usage
+## Deploying to Production
 
-There are 5 main steps to using this in production:
+### Parts to Deploy
 
-1.  Optionally, write a new backend for the gateway that queries your own data store. Or, use the JSON one and write your records to a JSON file in the format described in the gateway repository.
-2.  Generate one or more signing keys. Secure these appropriately; posession of the signing keys makes it possible to forge name resolution responses!
-3.  Start up a gateway server using your name database and a signing key. Publish it on a publicly-accessible URL.
-4.  Deploy `OffchainResolver` to Ethereum, providing it with the gateway URL and list of signing key addresses.
-5.  Set the newly deployed resolver as the resolver for one or more ENS names.
+- Generate a private key for the flow and secure it appropriately.
+- Deploy the gateway and take note of the Gateway URL.
+  - Ensure the DATA and PRIVATE_KEY environment variables are set as described in the [Gateway README](packages/gateway/README.md).
+- Set the Gateway URL in [hardhat.config.js](packages/contracts/hardhat.config.js).
+- Deploy/Verify the [resolver smart contract](packages/contracts).
+  - Ensure all the environment variables are set as described in the [Contracts README](packages/contracts/README.md).
+  ```
+  # Deploy Contract
+  npx hardhat deploy --network <network>
+
+  # Verify contract
+  npx hardhat verify --constructor-args ./arguments.js --network <network> <deployed contract address>
+  ```
+
+- Update the resolver in the ENS profile page for the root domain to point to the deployed contract.
+
+## Testing in the Wild
+
+Once all the parts are deployed and the resolver contract is associated to the ENS profile, your [ENS Domain](https://app.ens.domains/) should be able to resolve with your address.
+
+### Manual Testing
+
+Another way we can test the workflow is to leverage the [test script](packages/contracts/postDeploymentTest/TestResolve.js). This script is basically a very simple client that 
+knows how to interact with contract and gateway using the CCIP Read Protocol. You can use this script to try and debug specific aspects of the process. A sample input is as follows:
+
+```
+node TestResolve.js martinet.zircut.com
+```
