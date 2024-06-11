@@ -1,7 +1,9 @@
 runtime: nodejs10
-entrypoint: "node dist/index.js --private-key $PRIVATE_KEY --data $DATA --port $PORT"
+entrypoint: "PRIVATE_KEY=$PRIVATE_KEY DATA=$DATA PORT=$PORT TTL=$TTL node dist/index.js"
 env_variables:
-  PORT: 8080
+  PRIVATE_KEY: $PRIVATE_KEY
   DATA: "src/offchainexample.eth.json"
+  PORT: 8080
+  TTL: $PRIVATE_KEY
 includes:
 - secret.yaml
