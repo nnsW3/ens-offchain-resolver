@@ -6,10 +6,7 @@ These contracts implement [ENSIP 10](https://docs.ens.domains/ens-improvement-pr
 
 These contracts can also be used as a starting point for other verification methods, such as allowing the owner of the name to sign the records themselves, or relying on another verification mechanism such as a merkle tree or an L2 such as Optimism. To do so, start by replacing the calls to `SignatureVerifier` in `OffchainResolver` with your own solution.
 
-## Steps to setup the resolver contract and use in production
-- Deploy the resolver smart contract.
-- Set the url to the gateway endpoint and the signer that is used by the gateway.
-- Update the resolver from ENS profile page for the root domain to point to the deployed contract.
+Steps for deploying and end to end testing this contract can be found in the project root folder.
 
 ## Contracts
 
@@ -21,22 +18,6 @@ This library facilitates checking signatures over CCIP read responses.
 
 ### [OffchainResolver.sol](contracts/OffchainResolver.sol)
 This contract implements the offchain resolution system. Set this contract as the resolver for a name, and that name and all its subdomains that are not present in the ENS registry will be resolved via the provided gateway by supported clients.
-
-## Commands
-
-### Deploy contract
-For production use, only deploy the offchain resolver `10_offchain_resolver.js` is enough.
-
-`npx hardhat deploy --network <network>`
-
-### Verify contract
-`npx hardhat verify --constructor-args ./arguments.js --network <network> <deployed contract address>`
-
-### Post deployment check
-Uncomment the relative steps and add inputs in `./postDeploymentTest/TestResolve.js` then run
-`
-node ./postDeploymentTest/TestResolve.js
-`
 
 ### ENV VARS
 

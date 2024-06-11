@@ -104,6 +104,14 @@ Check these addresses against the chosen gateway test db json file and you will 
 - Set the Gateway URL in [hardhat.config.js](packages/contracts/hardhat.config.js).
 - Deploy/Verify the [resolver smart contract](packages/contracts).
   - Ensure all the environment variables are set as described in the [Contracts README](packages/contracts/README.md).
+  ```
+  # Deploy Contract
+  npx hardhat deploy --network <network>
+
+  # Verify contract
+  npx hardhat verify --constructor-args ./arguments.js --network <network> <deployed contract address>
+  ```
+
 - Update the resolver in the ENS profile page for the root domain to point to the deployed contract.
 
 ## Testing in the Wild

@@ -41,7 +41,7 @@ const main = async () => {
     extraData = e.errorArgs.extraData
   }
 
-  // STEP #2 Follwo CCIP Protocol to fetch data from Gateways
+  // STEP #2 Follow CCIP Protocol to fetch data from Gateways
   let successfulGatewayCall = false, i = 0;
   let result;
   while (!successfulGatewayCall && i < urls.length) {
@@ -53,8 +53,10 @@ const main = async () => {
 
       // If we didn't get a real response back from the gateway, we should try the other urls in the list
       successfulGatewayCall = !!result
-    } catch {}
-    
+    } catch (e) {
+      console.log(e)
+    }
+
     i++;
   }
 
