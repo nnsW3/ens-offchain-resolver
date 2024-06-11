@@ -36,7 +36,7 @@ module.exports = {
   },
   namedAccounts: {
     signer: {
-      default: process.env.SIGNER_ADDRESS,
+      default: process.env.SIGNER_ADDRESS || 1,
     },
     deployer: {
       default: process.env.DEPLOYER_ADDRESS || 0,

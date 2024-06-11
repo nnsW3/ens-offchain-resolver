@@ -25,13 +25,15 @@ This contract implements the offchain resolution system. Set this contract as th
 ## Commands
 
 ### Deploy contract
+For production use, only deploy the offchain resolver `10_offchain_resolver.js` is enough.
+
 `npx hardhat deploy --network <network>`
 
 ### Verify contract
 `npx hardhat verify --constructor-args ./arguments.js --network <network> <deployed contract address>`
 
 ### Post deployment check
-uncomment the relative steps and add inputs in `./postDeploymentTest/TestResolve.js` then run
+Uncomment the relative steps and add inputs in `./postDeploymentTest/TestResolve.js` then run
 `
 node ./postDeploymentTest/TestResolve.js
 `
@@ -42,6 +44,6 @@ node ./postDeploymentTest/TestResolve.js
 - `SEPOLIA_ALCHEMY_KEY`: alchemy api key for sepolia
 - `ETH_ALCHEMY_KEY`: alchemy api key for the ethereum mainnet
 - `DEPLOYER_PRIVATE_KEY`: deployer private key, without `0x` prefix
-- `DEPLOYER_ADDRESS`: deployer address
-- `SIGNER_ADDRESS`: signer address that is used by the gateway, testing signer: `0x56b5d20AFB05EdAf36fdAC47C52D7912fE9684a7`
+- `DEPLOYER_ADDRESS`: deployer address, for local testing, left this envvar empty in order to use the default ethers.js signers
+- `SIGNER_ADDRESS`: signer address that is used by the gateway, testing signer: `0x56b5d20AFB05EdAf36fdAC47C52D7912fE9684a7`, for local testing, left this envvar empty in order to use the default ethers.js signers
 - `GATEWAY_URL`: gateway url for the lookup endpoint, testing gateway: `https://ens-offchain-resolver-poc-53bc35fa24af.herokuapp.com`
