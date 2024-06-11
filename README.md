@@ -34,7 +34,7 @@ First, install dependencies and build all packages:
 yarn && yarn build
 ```
 
-[Follow here](https://github.com/ensdomains/offchain-resolver/blob/main/packages/gateway-worker/README.md) to run gateway worker locally. ( Skip this step if cloudflare worker url will be used as a remote gateway )
+[Follow here](https://github.com/ensdomains/offchain-resolver/blob/main/packages/gateway/README.md) to run the gateway locally. ( Skip this step if using a deployed gateway )
 <br/><br/>
 
 Take a look at the data in `test.eth.json` under `packages/gateway/`; it specifies addresses for the name `test.eth` and the wildcard `*.test.eth`.
@@ -44,10 +44,11 @@ Next, edit `packages/contracts/hardhat.config.js`; replacing the address on `lin
 Then, in a new terminal, build and run a test node with an ENS registry and the offchain resolver deployed:
 
 ```bash
-# If local cloudflare worker will be used
+# If local gateway will be used for testing
 yarn start:node
-# If remote cloudflare worker url will be used as gateway use the script below instead
-export REMOTE_GATEWAY=https://offchain-gateway.ensdomains.workers.dev
+
+# If deployed app will be used as gateway set the environment variable for the contracts to use
+export REMOTE_GATEWAY=https://{{app-sub-domain}}.herokuapp.com
 yarn start:node
 ```
 
