@@ -8,7 +8,7 @@ These contracts can also be used as a starting point for other verification meth
 
 ## Steps to setup the resolver contract and use in production
 - Deploy the resolver smart contract.
-- Set the url to the gateway endpoing and the signer that is used by the gateway.
+- Set the url to the gateway endpoint and the signer that is used by the gateway.
 - Update the resolver from ENS profile page for the root domain to point to the deployed contract.
 
 ## Contracts
